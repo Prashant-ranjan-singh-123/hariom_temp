@@ -4,6 +4,7 @@ import 'package:hariom/main.dart';
 import 'package:hariom/utils/app_assets.dart';
 import 'package:hariom/utils/app_color.dart';
 
+import '../../../reusable/app_bar_custom.dart';
 import '../bottom_nav_navigator/bottom_nav_navigator_cubit.dart';
 import 'bottom_nav_3_cubit.dart';
 
@@ -49,33 +50,76 @@ class _BottomNav3ScreenState extends State<BottomNav3Screen> {
       body: SafeArea(
         child: SizedBox(
           width: MediaQuery.sizeOf(context).width,
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: width * 0.08),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(height: height*0.1,),
-                  Image.asset(MyAppAssets.instance().png_profile_image),
-                  SizedBox(height: height*0.05,),
-                  _text_field(heading: 'Employee Id', label: 'Employee Id', controller: employee_id),
-                  SizedBox(height: height*0.02,),
-                  _text_field(heading: 'Full Name', label: 'Name', controller: name),
-                  SizedBox(height: height*0.02,),
-                  _text_field(heading: 'Designation', label: 'Designation', controller: design),
-                  SizedBox(height: height*0.02,),
-                  _text_field(heading: 'Email Id', label: 'Email Id', controller: mail),
-                  SizedBox(height: height*0.02,),
-                  _text_field(heading: 'Phone Number', label: 'Phone Number', controller: phone),
-                  SizedBox(height: height*0.03,),
-                  save_button(),
-                  SizedBox(height: height*0.03,),
-                  log_out_button(),
-                  SizedBox(height: height*0.05,),
-                ],
+          child: Column(
+            children: [
+              AppBarCustom(
+                title: "Profile",
+                isHideNotification: true,
               ),
-            ),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: width * 0.08),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: height * 0.05,
+                        ),
+                        Image.asset(MyAppAssets.instance().png_profile_image),
+                        SizedBox(
+                          height: height * 0.05,
+                        ),
+                        _text_field(
+                            heading: 'Employee Id',
+                            label: 'Employee Id',
+                            controller: employee_id),
+                        SizedBox(
+                          height: height * 0.02,
+                        ),
+                        _text_field(
+                            heading: 'Full Name',
+                            label: 'Name',
+                            controller: name),
+                        SizedBox(
+                          height: height * 0.02,
+                        ),
+                        _text_field(
+                            heading: 'Designation',
+                            label: 'Designation',
+                            controller: design),
+                        SizedBox(
+                          height: height * 0.02,
+                        ),
+                        _text_field(
+                            heading: 'Email Id',
+                            label: 'Email Id',
+                            controller: mail),
+                        SizedBox(
+                          height: height * 0.02,
+                        ),
+                        _text_field(
+                            heading: 'Phone Number',
+                            label: 'Phone Number',
+                            controller: phone),
+                        SizedBox(
+                          height: height * 0.03,
+                        ),
+                        save_button(),
+                        // SizedBox(
+                        //   height: height * 0.03,
+                        // ),
+                        // log_out_button(),
+                        SizedBox(
+                          height: height * 0.05,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -84,8 +128,8 @@ class _BottomNav3ScreenState extends State<BottomNav3Screen> {
 
   Widget _text_field(
       {required String heading,
-        required String label,
-        required TextEditingController controller}) {
+      required String label,
+      required TextEditingController controller}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -180,7 +224,8 @@ class _BottomNav3ScreenState extends State<BottomNav3Screen> {
           cubit.log_out(context: context);
         },
         style: OutlinedButton.styleFrom(
-          side: BorderSide(color: MyAppColors.instance().brand_color), // Set border color
+          side: BorderSide(
+              color: MyAppColors.instance().brand_color), // Set border color
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12), // Rounded corners
           ),
@@ -200,5 +245,4 @@ class _BottomNav3ScreenState extends State<BottomNav3Screen> {
       ),
     );
   }
-
 }

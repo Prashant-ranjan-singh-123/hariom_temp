@@ -1,8 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../../utils/app_color.dart';
+import 'package:pull_down_button/pull_down_button.dart';
+import '../screens/after_login/bottom_nav_index_2/bottom_nav_3_cubit.dart';
 import '../screens/after_login/notification_screen/notification_screen_ui.dart';
 
 class AppBarCustom extends StatelessWidget {
@@ -10,12 +11,14 @@ class AppBarCustom extends StatelessWidget {
   Icon? icon;
   bool isHomeScreen;
   bool isNotificationScreen;
+  bool isHideNotification;
   AppBarCustom(
       {super.key,
       required this.title,
       this.icon,
       this.isHomeScreen = false,
-      this.isNotificationScreen = false});
+      this.isNotificationScreen = false,
+      this.isHideNotification = false});
 
   @override
   Widget build(BuildContext context) {
@@ -59,23 +62,47 @@ class AppBarCustom extends StatelessWidget {
               Alignment.centerRight, // Align the CircleAvatar to the right
           child: CircleAvatar(
             backgroundColor: Colors.white,
-            child: isNotificationScreen
-                ? const SizedBox()
-                : IconButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const NotificationScreenUi()));
-                    },
-                    icon: icon == null
-                        ? const Icon(
-                            Icons.notifications,
-                            color: Colors.black,
-                          )
-                        : icon!,
-                    color: Colors.white, // Color for the icon
-                    highlightColor: Colors.white.withOpacity(0.2),
-                    splashColor: Colors.red,
-                  ),
+            child: isHideNotification
+                ? PullDownButton(
+                    position: PullDownMenuPosition.over,
+                    itemBuilder: (context) => [
+                      PullDownMenuItem(
+                        icon: Icons.logout,
+                        title: 'Log Out',
+                        onTap: () {
+                          context
+                              .read<BottomNav3Cubit>()
+                              .log_out(context: context);
+                        },
+                      ),
+                    ],
+                    buttonBuilder: (context, showMenu) => CupertinoButton(
+                      onPressed: showMenu,
+                      padding: EdgeInsets.zero,
+                      child: const Icon(
+                        Icons.more_vert,
+                        color: Colors.black,
+                      ),
+                    ),
+                  )
+                : isNotificationScreen
+                    ? const SizedBox()
+                    : IconButton(
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  const NotificationScreenUi()));
+                        },
+                        icon: icon == null
+                            ? const Icon(
+                                Icons.notifications_none,
+                                color: Colors.black,
+                              )
+                            : icon!,
+                        color: Colors.white, // Color for the icon
+                        highlightColor: Colors.white.withOpacity(0.2),
+                        splashColor: Colors.red,
+                      ),
           ),
         ),
       ],
