@@ -32,6 +32,9 @@ class BottomNav1Ui extends StatelessWidget {
                   ),
                   child: ButtonsTabBar(
                     // Customize the appearance and behavior of the tab bar
+                    physics: PageScrollPhysics(),
+                    // center: true,
+                    contentCenter: true,
                     backgroundColor: MyAppColors.instance().brand_color,
                     contentPadding: const EdgeInsets.symmetric(horizontal: 15),
                     borderWidth: 0,
